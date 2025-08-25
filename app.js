@@ -7,7 +7,7 @@ const { handleNotFound, globalError } = require('./middlewares/globalErrorHandle
 // Import routes
 const authRoute = require('./routes/auth.route');
 const userRoute = require('./routes/user.route');
-
+ const pinRoutes = require("./routes/pin.route");
 
 const app = express()
 
@@ -16,6 +16,7 @@ app.use(cookieParser());
 
 app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/users',userRoute)
+app.use("/api/pins", pinRoutes)
 
 app.use(handleNotFound);
 app.use(globalError);
