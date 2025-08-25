@@ -10,6 +10,7 @@ const {
   forgetPassword,
   resetPassword,
   resendVerification,
+  newAccessToken,
 } = require("../controllers/auth.controller");
 const { emailValidator } = require("../middlewares/validators");
 

@@ -23,4 +23,6 @@ const emailValidator = [
   },
 ];
 
+
+
 module.exports = { emailValidator };
