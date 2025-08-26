@@ -54,6 +54,8 @@ async function createAndSendEmailCode(user, logger) {
 
 const signup = asyncErrorHandler(async (req, res, next) => {
   const { username, email, password } = req.body;
+    console.log("req.body in signup:", req.body);
+
   logger.info("Auth: signup attempt", {
     email,
     ip: req.ip,
@@ -112,6 +114,7 @@ const signup = asyncErrorHandler(async (req, res, next) => {
 
 const signin = asyncErrorHandler(async (req, res, next) => {
   const { email, password } = req.body;
+  
 
   logger.info("Auth: signin attempt", {
     email,

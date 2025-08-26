@@ -8,6 +8,7 @@ const sendResponse = require("../utils/sendResponse");
 const createPin = asyncErrorHandler(async (req, res, next) => {
   const { title, description, imageUrl, board, tags } = req.body;
   const userId = req.user.id;
+  console.log(userId)
 
   // Find the board
   const boardDoc = await Board.findById(board);

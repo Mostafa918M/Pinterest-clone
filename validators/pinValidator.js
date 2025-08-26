@@ -17,7 +17,7 @@ const pinValidator = [
     .notEmpty().withMessage("Image URL is required")
     .matches(/^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg|webp))$/i).withMessage("Invalid image URL format"),
 
-  body("createdBy")
+  body("createdBy").optional()
     .notEmpty().withMessage("CreatedBy is required")
     .isMongoId().withMessage("CreatedBy must be a valid Mongo ID"),
 
