@@ -36,7 +36,7 @@ const pinValidator = [
 
   body("repinFrom")
     .optional({ nullable: true })
-    .isMongoId().withMessage("RepinFrom must be a valid Mongo ID if provided"),
+    // .isMongoId().withMessage("RepinFrom must be a valid Mongo ID if provided"),
 ];
 
 module.exports = pinValidator;

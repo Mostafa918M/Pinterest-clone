@@ -115,6 +115,21 @@ const deleteBoard = asyncErrorHandler(async (req, res, next) => {
   sendResponse(res, 200, "success", "Board deleted successfully");
 });
 
+const getBoard = asyncErrorHandler(async (req, res, next) => {
+  const boardId = req.params.id;
+
+  const board = await Board.findById(boardId)
+    .populate("createdBy", "username avatar")
+    .populate("pins");
+
+  if (!board) {
+    return next(new ApiError("Board not found", 404));
+  }
+
+  sendResponse(res, 200, "success", "Board retrieved successfully", { board });
+});
+
+
 module.exports = {
   createBoard,
   getBoardById,

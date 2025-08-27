@@ -4,42 +4,43 @@ const Pin = require("../models/pin.model");
 const Board = require("../models/board.model");
 const sendResponse = require("../utils/sendResponse");
 
-// Create a new pin
 const createPin = asyncErrorHandler(async (req, res, next) => {
-  const { title, description, imageUrl, board, tags } = req.body;
-  const userId = req.user.id;
-  console.log(userId)
+  try {
+    const { title, description, imageUrl, board, tags } = req.body;
+    const userId = req.user.id;
+    console.log("User ID:", userId);
+    console.log("Body:", req.body);
 
-  // Find the board
-  const boardDoc = await Board.findById(board);
-  if (!boardDoc) {
-    return next(new ApiError("Board not found", 404));
+    const boardDoc = await Board.findById(board);
+    if (!boardDoc) {
+      return next(new ApiError("Board not found", 404));
+    }
+
+    // if (boardDoc.createdBy.toString() !== userId) {
+    //   return next(new ApiError("You do not own this board", 403));
+    // }
+
+    const newPin = new Pin({
+      title,
+      description,
+      imageUrl,
+      createdBy: userId,
+      board,
+      tags,
+    });
+
+    await newPin.save();
+
+    boardDoc.pins.push(newPin._id);
+    await boardDoc.save();
+
+    sendResponse(res, 201, "success", "Pin created successfully", {
+      pin: newPin,
+    });
+  } catch (err) {
+    console.error("Create Pin Error:", err); // <--- THIS IS IMPORTANT
+    next(new ApiError("Failed to create pin", 500));
   }
-
-  // Optional ownership check
-  if (boardDoc.createdBy.toString() !== userId) {
-    return next(new ApiError("You do not own this board", 403));
-  }
-
-  // Create the pin
-  const newPin = new Pin({
-    title,
-    description,
-    imageUrl,
-    createdBy: userId,
-    board,
-    tags,
-  });
-
-  await newPin.save();
-
-  // Push the pin ID into the board's pins array
-  boardDoc.pins.push(newPin._id);
-  await boardDoc.save();
-
-  sendResponse(res, 201, "success", "Pin created successfully", {
-    pin: newPin,
-  });
 });
 
 // Get pin by ID

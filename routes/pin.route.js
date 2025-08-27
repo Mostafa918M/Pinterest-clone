@@ -20,7 +20,7 @@ const router = express.Router();
 
 router
   .route("/")
-  .post(auth(), pinValidator, validateRequest, createPin)
+  .post(auth(["user", "admin"]), pinValidator, validateRequest, createPin)
   .get(getPins);
 
 router
