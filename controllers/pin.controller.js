@@ -110,8 +110,9 @@ const getPins = asyncErrorHandler(async (req, res, next) => {
 const updatePin = asyncErrorHandler(async (req, res, next) => {
   const pin = await Pin.findById(req.params.id);
   if (!pin) return next(new ApiError("Pin not found", 404));
-  if (pin.createdBy.toString() !== req.user.id)
-    return next(new ApiError("You do not own this pin", 403));
+  
+  // if (pin.createdBy.toString() !== req.user.id)
+  //   return next(new ApiError("You do not own this pin", 403));
 
   const { title, description, imageUrl, tags } = req.body;
   if (title) pin.title = title;

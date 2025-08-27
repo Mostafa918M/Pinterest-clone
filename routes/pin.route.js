@@ -26,7 +26,7 @@ router
 router
   .route("/:id")
   .get(getPinById)
-  .put(auth(), pinValidator, validateRequest, updatePin)
+  .put(auth(["user", "admin"]), pinValidator, validateRequest, updatePin)
   .delete(auth(), deletePin);
 
 router.post("/:id/repin", auth(), repin);
