@@ -513,5 +513,5 @@ module.exports = {
   forgetPassword,
   resetPassword,
   newAccessToken,
-  getUserInfo
+  getUserInfo,
 };

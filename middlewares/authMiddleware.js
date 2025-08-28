@@ -2,7 +2,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/users.models");
 const JWT_SECRET_ACCESS = process.env.JWT_SECRET_ACCESS;
-const apiError = require("../utils/apiError");
+const ApiError = require("../utils/apiError");
 
 function authMiddleware(allowedUsers = ["user"]) {
   return async function (req, res, next) {
